@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GPC Iframe - Page Five</title>
+    <style>
+      body {
+        font-family: sans-serif;
+        padding: 20px;
+        background: #f3e5f5;
+      }
+      .page-label {
+        display: inline-block;
+        background: #9c27b0;
+        color: #fff;
+        padding: 4px 10px;
+        border-radius: 4px;
+        font-size: 12px;
+        font-weight: bold;
+        margin-bottom: 12px;
+      }
+      h2 { margin-bottom: 8px; }
+      p { color: #555; font-size: 14px; }
+    </style>
+  </head>
+  <body>
+    <div class="page-label">IFRAME - PAGE FIVE</div>
+    <h2>Page Five Iframe Content</h2>
+    <p>
+      The parent does not run <code>gpc.init</code> or show any banner itself.
+      Instead it detects <code>navigator.globalPrivacyControl</code> and sends
+      <code>trustarc_gpc_signal</code> via postMessage. This iframe receives that
+      signal and renders the GPC banner here.
+    </p>
+
+    <script>
+      !(function () {
+        "use strict";
+        var t = document.createElement("script");
+        t.src = "https://form-renderer.trustarc.com/browser/client.js";
+        t.type = "text/javascript";
+        t.defer = true;
+        document.body.appendChild(t);
+        window.trustarc = window.trustarc || {};
+        var r = window.trustarc;
+        r.irm = [];
+        for (
+          var n = ["init", "destroy", "shouldShowGPCBanner", "setGPCSubmitted"],
+            e = 0;
+          e < n.length;
+          e++
+        ) {
+          var o = n[e];
+          r.irm[o] =
+            r.irm[o] ||
+            (function (t) {
+              return function () {
+                var n = Array.prototype.slice.call(arguments);
+                r.irm.push([t, n]);
+              };
+            })(o);
+        }
+        r.irm.init({
+          formId: "fe7532e0-3ef9-476a-9ea6-19d94c70a58b",
+          gpcDetection: true,
+          gpcConfig: {
+            showFormForUnsubmittedDSR: true,
+            geoLocationCodes: [],
+          },
+        });
+      })();
+    </script>
+  </body>
+</html>
