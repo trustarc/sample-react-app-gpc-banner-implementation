@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!--
+      FIXED POLICY — identical to index.html, plus one directive.
+
+      frame-src names the origin serving the form. That single addition is the
+      entire fix. Everything the form needs loads inside the iframe from its own
+      origin, which this parent policy does not govern.
+
+      The origin must match the region actually serving your form: this form is
+      on .com, and a policy allowing only submit-irm.trustarc.eu would still
+      block it, silently.
+    -->
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; connect-src 'self' ws: wss:; frame-src https://submit-irm.trustarc.com"
+    />
+
+    <title>Fixed — frame-src allows the DSR form</title>
+    <style>
+      * { box-sizing: border-box; margin: 0; padding: 0; }
+      body { font-family: sans-serif; }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/fixed.jsx"></script>
+  </body>
+</html>

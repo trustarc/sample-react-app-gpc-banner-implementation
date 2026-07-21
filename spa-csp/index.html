@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!--
+      STRICT POLICY — note there is no frame-src directive.
+
+      Absent frame-src, the browser falls back to default-src 'self', so every
+      cross-origin iframe is refused. This is the bug: the policy never mentions
+      iframes, yet it blocks them.
+
+      Delivered as a <meta> tag so the policy is present at first parse. This is
+      a separate HTML document from fixed.html, which is what guarantees the two
+      policies can never be confused with one another.
+    -->
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; connect-src 'self' ws: wss:"
+    />
+
+    <title>Blocked — CSP refuses the DSR form</title>
+    <style>
+      * { box-sizing: border-box; margin: 0; padding: 0; }
+      body { font-family: sans-serif; }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/blocked.jsx"></script>
+  </body>
+</html>

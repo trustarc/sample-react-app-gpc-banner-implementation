@@ -1,3 +1,4 @@
 packages:
   - 'spa-app'
   - 'spa-iframe'
+  - 'spa-csp'
